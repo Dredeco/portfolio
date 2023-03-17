@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, {useState, useEffect} from 'react';
-import getProjectsAction from './../services/actions/ProjectActions'
+import getProjectsAction from '../../services/actions/ProjectActions'
 
 const Projects = () => {
     const [projects, setProjects] = useState([])

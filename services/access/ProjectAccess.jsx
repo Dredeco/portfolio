@@ -1,4 +1,4 @@
-import {db} from "./../../api/Firebase";
+import {db} from "../../pages/api/Firebase";
 import {collection, getDocs} from "firebase/firestore";
 
 const projectsCollectionRef = collection(db, 'Projetos')
