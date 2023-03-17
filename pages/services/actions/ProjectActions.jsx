@@ -1,4 +1,3 @@
-import { deleteDoc, updateDoc } from "firebase/firestore";
 import getProjectsAccess from "./../access/ProjectAccess";
 
 export default async function getProjectsAction(){
