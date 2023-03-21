@@ -20,7 +20,7 @@ const Main = () => {
           className='absolute w-full h-[90vh] top-0 left-0 flex -z-10 opacity-10'
         />
         <div>
-          <p className='uppercase text-sm tracking-widest mt-16 text-gray-300'>
+          <p className='uppercase text-sm tracking-widest mt-36 text-gray-300'>
             VAMOS CONSTRUIR ALGO JUNTOS
           </p>
           <h1 className='pt-4 text-white text-2xl sm:text-4xl'>
@@ -35,6 +35,7 @@ const Main = () => {
               href='https://www.linkedin.com/in/andrefersouza/'
               target='_blank'
               rel='noreferrer'
+              className='z-50'
             >
               <div className='rounded-full bg-[#404040] shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
                 <FaLinkedinIn/>
@@ -44,21 +45,32 @@ const Main = () => {
               href='https://github.com/dredeco'
               target='_blank'
               rel='noreferrer'
+              className='z-50'
             >
               <div className='rounded-full bg-[#404040] shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
                 <FaGithub />
               </div>
             </a>
-            <Link href='https://facebook.com/dredeco' target='_blank'>
+            <a
+              href='https://facebook.com/andrefersouza'
+              target='_blank'
+              rel='noreferrer'
+              className='z-50'
+            >
               <div className='rounded-full bg-[#404040] shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
                 <FaFacebookF />
               </div>
-            </Link>
-            <Link href='https://instagram.com/dredeco.dev' target='_blank'>
+            </a>
+            <a
+              href='https://instagram.com/dredeco.dev'
+              target='_blank'
+              rel='noreferrer'
+              className='z-50'
+            >
               <div className='rounded-full bg-[#404040] shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
                 <FaInstagram />
               </div>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
