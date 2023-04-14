@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { AiOutlineMail } from 'react-icons/ai';
 import { BsFillPersonLinesFill } from 'react-icons/bs';
 import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
@@ -8,6 +9,20 @@ import { HiOutlineChevronDoubleUp } from 'react-icons/hi';
 import ContactImg from '../../public/images/contact.jpg';
 
 const Contact = () => {
+
+  const sendEmail = (e => {
+    e.preventDefault();
+
+    emailjs.sendForm('gmail', 'template_ptwinsd', e.target, 'RcD_dB2-94xJ045Fq')
+      .then((result) => {
+          console.log(result.text);
+          alert("Mensagem enviada!")
+      }, (error) => {
+          console.log(error.text);
+      });
+      e.target.reset();
+  });
+
   return (
     <div id='contact' className='w-full lg:h-screen'>
       <div className='max-w-[1240px] m-auto px-2 py-16 w-full '>
@@ -82,18 +97,14 @@ const Contact = () => {
           {/* right */}
           <div className='col-span-3 w-full h-auto shadow-xl shadow-gray-900 rounded-xl lg:p-4'>
             <div className='p-4'>
-              <form
-                action='https://getform.io/f/08ebcd37-f5b5-45be-8c13-714f011ce060'
-                method='POST'
-                encType='multipart/form-data'
-              >
+              <form onSubmit={sendEmail}>
                 <div className='grid md:grid-cols-2 gap-4 w-full py-2'>
                   <div className='flex flex-col'>
                     <label className='uppercase text-sm py-2'>Nome</label>
                     <input
                       className='border-2 rounded-lg p-3 flex border-gray-900'
                       type='text'
-                      name='name'
+                      name='user_name'
                     />
                   </div>
                   <div className='flex flex-col'>
@@ -103,7 +114,7 @@ const Contact = () => {
                     <input
                       className='border-2 rounded-lg p-3 flex border-gray-900'
                       type='text'
-                      name='phone'
+                      name='user_phone'
                     />
                   </div>
                 </div>
@@ -112,7 +123,7 @@ const Contact = () => {
                   <input
                     className='border-2 rounded-lg p-3 flex border-gray-900'
                     type='email'
-                    name='email'
+                    name='user_email'
                   />
                 </div>
                 <div className='flex flex-col py-2'>
