@@ -1,7 +1,7 @@
 import React from 'react';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import Link from 'next/link';
-import AboutImg from '../../public/images/userq.jpg';
+import AboutImg from '../../public/images/userq1.jpeg';
 
 const About = () => {
   return (
@@ -24,8 +24,8 @@ const About = () => {
             </p>
           </Link>
         </div>
-        <div className='w-full h-auto m-auto shadow-xl bg-[#1cff81] shadow-gray-900 rounded-full flex items-center justify-center p-4'>
-          <Image src={AboutImg} className='rounded-full' alt='/' />
+        <div className='w-full h-auto m-auto shadow-xl bg-[#1cff81] shadow-gray-900 rounded-full flex items-center justify-center p-2'>
+          <Image src={AboutImg} className='rounded-full' layout='intrinsic' objectFit='cover' objectPosition='top' alt='/' />
         </div>
       </div>
     </div>
