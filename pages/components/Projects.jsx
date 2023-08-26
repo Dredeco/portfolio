@@ -32,7 +32,7 @@ const Projects = () => {
                     <div className='hidden w-full p-5 group-hover:block absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>
                         <h3 className='text-2xl text-white tracking-wider text-center'>{project.name}</h3>
                         <p className='pb-4 pt-2 text-white text-center'>{project.description}</p>
-                        <Link href={project.link}>
+                        <Link target="_blank" href={project.link}>
                             <p className='text-center py-3 mx-10 rounded-lg bg-white text-gray-700 font-bold text-lg cursor-pointer'>Visitar</p>
                         </Link>
                     </div>
