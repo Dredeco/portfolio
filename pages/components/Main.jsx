@@ -4,10 +4,10 @@ import React from 'react';
 import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import BgImage from '../../public/images/teclado.jpg'
 
-const buttons = [
+export const buttons = [
   {name: "LinkedIn", link: "https://www.linkedin.com/in/andrefersouza/", icon: <FaLinkedinIn /> },
   {name: "Github", link: "https://github.com/dredeco", icon: <FaGithub /> },
-  {name: "Facebook", link: "https://facebook.com/andrefersouza", icon: <FaFacebookF /> },
+  {name: "Facebook", link: "https://www.facebook.com/dredeco/", icon: <FaFacebookF /> },
   {name: "Instagram", link: "https://instagram.com/dredeco.dev", icon: <FaInstagram /> }
 ]
 
@@ -35,7 +35,7 @@ const Main = () => {
           </h1>
           <h1 className='py-2 text-white text-2xl sm:text-4xl'>sou um Desenvolvedor <span className='text-[#1cff81]'> Full-stack</span>.</h1>
           <p className='py-4 text-gray-300 sm:max-w-[70%] m-auto'>
-            Meu foco é na criação de Landing Pages e Sites Institucionais, sempre buscando explorar novos caminhos.
+            Atualmente focado na criação de Landing Pages e Sites Institucionais, sempre buscando explorar novas técnicas e frameworks para apresentar o melhor resultado.
           </p>
           <div className='flex items-center justify-between max-w-[330px] m-auto py-4'>
             {

@@ -4,12 +4,19 @@ import React, { useState, useEffect } from 'react';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import NavLogo from './../../public/images/logo.png'
+import { buttons } from './Main';
+
+const links = [
+  {name: "Home", section: "#"},
+  {name: "Sobre", section: "#about"},
+  {name: "Habilidades", section: "#skills"},
+  {name: "Projetos", section: "#projects"},
+  {name: "Contato", section: "#contact"},
+]
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [shadow, setShadow] = useState(false);
-  const [navBg, setNavBg] = useState('#404040');
-  const [linkColor, setLinkColor] = useState('#fff');
 
   const handleNav = () => {
     setNav(!nav);
@@ -28,11 +35,10 @@ const Navbar = () => {
 
   return (
     <div
-      style={{ backgroundColor: `${navBg}` }}
       className={
         shadow
-          ? 'fixed w-full h-20 shadow-xl shadow-gray-900 z-[100] ease-in-out duration-300'
-          : 'fixed w-full h-20 z-[100]'
+          ? 'fixed w-full h-20 bg-[#404040] shadow-xl shadow-gray-900 z-[100] ease-in-out duration-300'
+          : 'fixed w-full h-20 bg-[#404040] z-[100]'
       }
     >
       <div className='flex justify-between items-center w-full h-full px-2 2xl:px-16'>
@@ -46,26 +52,15 @@ const Navbar = () => {
             />
         </Link>
         <div>
-          <ul style={{ color: `${linkColor}` }} className='hidden md:flex'>
-            <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link href='#'>Home</Link>
-            </li>
-            <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link href='#about'>Sobre</Link>
-            </li>
-            <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link href='#skills'>Habilidades</Link>
-            </li>
-            <li className='ml-10 text-sm uppercase hover:border-b'>
-              <Link href='#projects'>Projetos</Link>
-            </li>
-            <li className='ml-10 text-sm uppercase mr-4 hover:border-b'>
-              <Link href='#contact'>Contato</Link>
-            </li>
+          <ul className='hidden md:flex gap-4'>
+            {links.map((link) => (
+              <li className='text-sm mr-2 hover:font-bold hover:text-[#1cff81]'>
+                <Link href={link.section}>{link.name}</Link>
+              </li>
+            ))}
           </ul>
           {/* Hamburger Icon */}
           <div
-            style={{ color: `${linkColor}` }}
             onClick={handleNav}
             className='md:hidden mr-2'
           >
@@ -106,79 +101,34 @@ const Navbar = () => {
                 <AiOutlineClose />
               </div>
             </div>
-            <div className='border-b border-gray-300 my-4'>
-              <p className='w-[85%] md:w-[90%] py-4'>
-                Vamos construir algo incrível juntos
-              </p>
-            </div>
+            <div className='border-b border-gray-300 my-4' />
           </div>
           <div className='py-4 flex flex-col'>
             <ul className='uppercase'>
-              <Link href='#'>
-                <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Home
-                </li>
-              </Link>
-              <Link href='#about'>
-                <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Sobre
-                </li>
-              </Link>
-              <Link href='#skills'>
-                <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Habilidades
-                </li>
-              </Link>
-              <Link href='#projects'>
-                <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Projetos
-                </li>
-              </Link>
-              <Link href='#contact'>
-                <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                  Contato
-                </li>
-              </Link>
+              {links.map((link) => (
+                <Link href={link.section}>
+                  <li onClick={() => setNav(false)} className='py-4 text-sm'>
+                    {link.name}
+                  </li>
+                </Link>
+              ))}
             </ul>
             <div className='pt-10'>
               <p className='uppercase tracking-widest text-[#1cff81]'>
                 Minhas redes
               </p>
               <div className='flex items-center justify-between my-4 w-full sm:w-[80%]'>
-                <a
-                  href='https://www.linkedin.com/in/andrefersouza/'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <div className='rounded-full shadow-lg shadow-gray-900 p-3 cursor-pointer hover:scale-105 ease-in duration-300'>
-                    <FaLinkedinIn />
-                  </div>
-                </a>
-                <a
-                  href='https://github.com/dredeco'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <div className='rounded-full shadow-lg shadow-gray-900 p-3 cursor-pointer hover:scale-105 ease-in duration-300'>
-                    <FaGithub />
-                  </div>
-                </a>
-                <Link href='https://facebook.com/dredeco' target='_blank'>
-                  <div
-                    onClick={() => setNav(!nav)}
-                    className='rounded-full shadow-lg shadow-gray-900 p-3 cursor-pointer hover:scale-105 ease-in duration-300'
+                {buttons.map((button) => (
+                  <Link
+                    href={button.link}
+                    target='_blank'
+                    rel='noreferrer'
                   >
-                    <FaFacebookF />
-                  </div>
-                </Link>
-                <Link href='https://instagram.com/dredeco.dev' target='_blank'>
-                  <div
-                    onClick={() => setNav(!nav)}
-                    className='rounded-full shadow-lg shadow-gray-900 p-3 cursor-pointer hover:scale-105 ease-in duration-300'
-                  >
-                    <FaInstagram />
-                  </div>
-                </Link>
+                    <div className='rounded-full shadow-lg shadow-gray-900 p-3 cursor-pointer hover:scale-105 ease-in duration-300'>
+                      {button.icon}
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
