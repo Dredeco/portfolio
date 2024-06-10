@@ -5,10 +5,10 @@ import AboutImg from '../../public/images/userq1.jpeg';
 
 const About = () => {
   return (
-    <div id='about' className='w-full md:h-screen p-2 flex items-center py-16'>
+    <div id='about' className='w-full md:h-screen flex items-center py-16'>
       <div className='max-w-[1240px] m-auto md:grid grid-cols-3 gap-8'>
         <div className='col-span-2'>
-          <p className='uppercase text-xl tracking-widest text-[#1cff81]'>
+          <p className='uppercase font-bold text-xl tracking-widest text-[#1cff81]'>
             Sobre
           </p>
           <h2 className='py-4'>André Fernandes</h2>
@@ -16,10 +16,10 @@ const About = () => {
           Atualmente, meu foco é na criação de sites responsivos, tanto estáticos quanto utilizando APIs. Tenho interesse em aprender novas tecnologias e aplicá-las em meus projetos. Para criar sites, utilizo as linguagens HTML, CSS, Javascript, ReactJS e NextJS, além de estudar constantemente novas funcionalidades e soluções conforme necessário. Acredito que no desenvolvimento de projetos, é importante usar as melhores ferramentas disponíveis.
           </p>
           <p className='py-2 text-gray-300'>
-          Sou formado em Técnico de Informática pelo IFF e atualmente estou me formando em Marketing pela UCAM. Sou uma pessoa curiosa que se interessa em entender o funcionamento das coisas e busca formas de simplificar e acelerar processos rotineiros. Possuo habilidades em raciocínio lógico e aprendo rapidamente coisas novas.
+          Sou formado em <strong>Técnico de Informática pelo Instituto Federal Fluminense</strong> e atualmente estou cursando <strong>Análise e Desenvolvimento de Sistemas pela Estácio</strong>. Sou uma pessoa curiosa que se interessa em entender o funcionamento das coisas e busca formas de simplificar e acelerar processos rotineiros. Possuo habilidades em raciocínio lógico e aprendo rapidamente coisas novas.
           </p>
           <Link href='/#projects'>
-            <p className='py-2 text-[#a593f3] underline cursor-pointer'>
+            <p className='py-2 font-bold text-[#a593f3] underline cursor-pointer'>
               Veja alguns dos meus últimos projetos.
             </p>
           </Link>
