@@ -1,12 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 import emailjs from '@emailjs/browser';
-import { AiOutlineMail } from 'react-icons/ai';
-import { BsFillPersonLinesFill } from 'react-icons/bs';
 import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { HiOutlineChevronDoubleUp } from 'react-icons/hi';
 import ContactImg from '../../public/images/contact.jpg';
+import { buttons } from './Main';
 
 const Contact = () => {
 
@@ -26,7 +25,7 @@ const Contact = () => {
   return (
     <div id='contact' className='w-full lg:h-screen'>
       <div className='max-w-[1240px] m-auto px-2 py-16 w-full '>
-        <p className='text-xl tracking-widest uppercase text-[#1cff81]'>
+        <p className='text-xl font-bold tracking-widest uppercase text-[#1cff81]'>
           Contato
         </p>
         <h2 className='py-4'>Entre em contato</h2>
@@ -43,7 +42,7 @@ const Contact = () => {
               </div>
               <div>
                 <h2 className='py-2'>André Fernandes</h2>
-                <p>Front-End Developer</p>
+                <p className='italic text-[#1cff81]'>Full-stack Developer</p>
                 <p className='py-4'>
                   Disponível para trabalhos. Entre em contato para mais informações.
                 </p>
@@ -51,44 +50,20 @@ const Contact = () => {
               <div>
                 <p className='uppercase pt-8 text-[#1cff81]'>Meus links</p>
                 <div className='flex items-center justify-between py-4'>
-                  <a
-                    href='https://www.linkedin.com/in/andrefersouza'
-                    target='_blank'
-                    rel='noreferrer'
-                  >
-                    <div className='rounded-full shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
-                      <FaLinkedinIn />
-                    </div>
-                  </a>
-                  <a
-                    href='https://github.com/dredeco'
-                    target='_blank'
-                    rel='noreferrer'
-                  >
-                    <div className='rounded-full shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
-                      <FaGithub />
-                    </div>
-                  </a>
-
-                  <a
-                    href='https://facebook.com/andrefersouza'
-                    target='_blank'
-                    rel='noreferrer'
-                  >
-                    <div className='rounded-full shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
-                      <FaFacebookF />
-                    </div>
-                  </a>
-
-                  <a
-                    href='https://instagram.com/dredeco.dev'
-                    target='_blank'
-                    rel='noreferrer'
-                  >
-                    <div className='rounded-full shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
-                      <FaInstagram />
-                    </div>
-                  </a>
+                {
+                  buttons.map((button) => (
+                    <a
+                      href={button.link}
+                      target='_blank'
+                      rel='noreferrer'
+                      className='z-50'
+                    >
+                      <div className='rounded-full bg-[#404040] shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300 hover:bg-[#129c50]'>
+                        {button.icon}
+                      </div>
+                    </a>
+                  ))
+                }
                 </div>
               </div>
             </div>
