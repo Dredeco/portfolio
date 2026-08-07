@@ -1,141 +1,102 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-import NavLogo from './../../public/images/logo.png'
-import { buttons } from './Main';
+import { useEffect, useState } from "react";
+import { Mail, Menu, X } from "lucide-react";
 
-const links = [
-  {name: "Home", section: "#"},
-  {name: "Sobre", section: "#about"},
-  {name: "Habilidades", section: "#skills"},
-  {name: "Projetos", section: "#projects"},
-  {name: "Contato", section: "#contact"},
-]
+const navLinks = [
+  { name: "Sobre", id: "hero" },
+  { name: "Skills", id: "skills" },
+  { name: "Projetos", id: "projects" },
+  { name: "Educação", id: "educacao" },
+  { name: "Contato", id: "contact" },
+];
 
-const Navbar = () => {
-  const [nav, setNav] = useState(false);
-  const [shadow, setShadow] = useState(false);
-
-  const handleNav = () => {
-    setNav(!nav);
-  };
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleShadow = () => {
-      if (window.scrollY >= 90) {
-        setShadow(true);
-      } else {
-        setShadow(false);
-      }
-    };
-    window.addEventListener('scroll', handleShadow);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  function scrollTo(id) {
+    setMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  }
+
   return (
-    <div
-      className={
-        shadow
-          ? 'fixed w-full h-20 bg-[#404040] shadow-xl shadow-gray-900 z-[100] ease-in-out duration-300'
-          : 'fixed w-full h-20 bg-[#404040] z-[100]'
-      }
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      style={{
+        background: scrolled ? "rgba(8,8,8,0.92)" : "transparent",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+        borderBottom: scrolled
+          ? "1px solid var(--border)"
+          : "1px solid transparent",
+      }}
     >
-      <div className='flex justify-between items-center w-full h-full px-2 2xl:px-16'>
-        <Link href='#'>
-            <Image
-              src={NavLogo}
-              alt='Dre.dev'
-              width='125'
-              height='50'
-              className='cursor-pointer'
-            />
-        </Link>
-        <div>
-          <ul className='hidden md:flex gap-4'>
-            {links.map((link) => (
-              <li className='text-sm mr-2 hover:font-bold hover:text-[#1cff81]'>
-                <Link href={link.section}>{link.name}</Link>
-              </li>
-            ))}
-          </ul>
-          {/* Hamburger Icon */}
-          <div
-            onClick={handleNav}
-            className='md:hidden mr-2'
-          >
-            <AiOutlineMenu size={25} />
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {/* Overlay */}
-      <div
-        className={
-          nav ? 'md:hidden fixed left-0 top-0 w-full h-screen bg-black/70' : ''
-        }
-      >
-        {/* Side Drawer Menu */}
-        <div
-          className={
-            nav
-              ? ' fixed left-0 top-0 overflow-y-auto w-[75%] sm:w-[60%] md:w-[45%] h-screen bg-[#404040] p-10 ease-in duration-500'
-              : 'fixed left-[-120%] top-0 p-10 ease-in duration-500'
-          }
+      <div className="flex items-center justify-between px-6 md:px-12 lg:px-24 h-16">
+        <button
+          type="button"
+          onClick={() => scrollTo("hero")}
+          className="font-mono text-sm tracking-widest uppercase text-primary hover:opacity-90 transition-opacity"
         >
-          <div>
-            <div className='flex w-full items-center justify-between'>
-              <Link href='/'>
-                  <Image
-                    src={NavLogo}
-                    width='87'
-                    height='35'
-                    alt='/'
-                  />
-              </Link>
-              <div
-                onClick={handleNav}
-                className='rounded-full shadow-lg shadow-gray-900 p-3 cursor-pointer'
-              >
-                <AiOutlineClose />
-              </div>
-            </div>
-            <div className='border-b border-gray-300 my-4' />
-          </div>
-          <div className='py-4 flex flex-col'>
-            <ul className='uppercase'>
-              {links.map((link) => (
-                <Link href={link.section}>
-                  <li onClick={() => setNav(false)} className='py-4 text-sm'>
-                    {link.name}
-                  </li>
-                </Link>
-              ))}
-            </ul>
-            <div className='pt-10'>
-              <p className='uppercase tracking-widest text-[#1cff81]'>
-                Minhas redes
-              </p>
-              <div className='flex items-center justify-between my-4 w-full sm:w-[80%]'>
-                {buttons.map((button) => (
-                  <Link
-                    href={button.link}
-                    target='_blank'
-                    rel='noreferrer'
-                  >
-                    <div className='rounded-full shadow-lg shadow-gray-900 p-3 cursor-pointer hover:scale-105 ease-in duration-300'>
-                      {button.icon}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+          Dre.dev
+        </button>
 
-export default Navbar;
+        <ul className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <li key={link.id}>
+              <button
+                type="button"
+                onClick={() => scrollTo(link.id)}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors tracking-wide"
+              >
+                {link.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="mailto:andrefersouza@gmail.com"
+          className="hidden md:flex items-center gap-2 text-sm font-medium px-4 py-2 rounded bg-primary text-primary-foreground transition-opacity hover:opacity-90"
+        >
+          <Mail size={14} />
+          Contato
+        </a>
+
+        <button
+          type="button"
+          className="md:hidden text-foreground"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Menu"
+        >
+          {menuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
+
+      {menuOpen && (
+        <div className="md:hidden border-t border-border bg-card px-6 py-6 flex flex-col gap-4">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              type="button"
+              onClick={() => scrollTo(link.id)}
+              className="text-left text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {link.name}
+            </button>
+          ))}
+          <a
+            href="mailto:andrefersouza@gmail.com"
+            className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded bg-primary text-primary-foreground w-fit"
+          >
+            <Mail size={14} />
+            Contato
+          </a>
+        </div>
+      )}
+    </nav>
+  );
+}
