@@ -5,7 +5,13 @@ import emailjs from '@emailjs/browser';
 import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { HiOutlineChevronDoubleUp } from 'react-icons/hi';
 import ContactImg from '../../public/images/contact.jpg';
-import { buttons } from './Main';
+
+const socialLinks = [
+  { name: 'LinkedIn', link: 'https://www.linkedin.com/in/andrefersouza/', icon: <FaLinkedinIn /> },
+  { name: 'Github', link: 'https://github.com/dredeco', icon: <FaGithub /> },
+  { name: 'Facebook', link: 'https://www.facebook.com/dredeco/', icon: <FaFacebookF /> },
+  { name: 'Instagram', link: 'https://instagram.com/dredeco.dev', icon: <FaInstagram /> },
+];
 
 const Contact = () => {
 
@@ -51,7 +57,7 @@ const Contact = () => {
                 <p className='uppercase pt-8 text-[#1cff81]'>Meus links</p>
                 <div className='flex items-center justify-between py-4'>
                 {
-                  buttons.map((button) => (
+                  socialLinks.map((button) => (
                     <a
                       href={button.link}
                       target='_blank'

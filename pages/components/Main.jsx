@@ -1,62 +1,93 @@
-import Image from 'next/legacy/image';
-import Link from 'next/link';
-import React from 'react';
-import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-import BgImage from '../../public/images/teclado.jpg'
+import { Github, Linkedin, Instagram, Facebook, ArrowUpRight } from "lucide-react";
+import Section from "../../components/Section";
+import useInView from "../../components/useInView";
 
-export const buttons = [
-  {name: "LinkedIn", link: "https://www.linkedin.com/in/andrefersouza/", icon: <FaLinkedinIn /> },
-  {name: "Github", link: "https://github.com/dredeco", icon: <FaGithub /> },
-  {name: "Facebook", link: "https://www.facebook.com/dredeco/", icon: <FaFacebookF /> },
-  {name: "Instagram", link: "https://instagram.com/dredeco.dev", icon: <FaInstagram /> }
-]
+const socials = [
+  { icon: Github, href: "https://github.com/dredeco", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/andrefersouza/", label: "LinkedIn" },
+  { icon: Instagram, href: "https://instagram.com/dredeco.dev", label: "Instagram" },
+  { icon: Facebook, href: "https://www.facebook.com/dredeco/", label: "Facebook" },
+];
 
-const Main = () => {
+export default function Main() {
+  const { ref, inView } = useInView(0.05);
+
+  function scrollTo(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  }
+
   return (
-    <div 
-    id='home' 
-    className='w-full h-[90vh] text-center'
-    >
-      <div className='max-w-[1240px] w-full h-full mx-auto p-2 flex justify-center items-center'>
-        <Image 
-          src={BgImage}
-          width='1280'
-          height='920'
-          layout='fill'
-          objectFit='cover'
-          className='absolute w-full h-[90vh] top-0 left-0 flex -z-10 opacity-10'
-        />
-        <div>
-          <p className='uppercase text-sm tracking-widest mt-36 text-gray-300'>
-            Bem vindo ao meu portfólio!
-          </p>
-          <h1 className='pt-4 text-white text-2xl sm:text-4xl'>
-            Olá! Meu nome é<span className='text-[#1cff81]'> André Fernandes</span>,
+    <div id="hero" ref={ref}>
+      <Section id="hero-inner" className="pt-36 pb-28 md:pt-44 md:pb-36">
+        <div
+          className="transition-all duration-700"
+          style={{
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateY(0)" : "translateY(24px)",
+          }}
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 text-xs mb-10 tracking-widest uppercase text-primary font-mono">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            Disponível para projetos
+          </div>
+
+          <h1 className="font-display text-6xl md:text-8xl lg:text-[7rem] leading-none tracking-tight mb-6 font-extrabold">
+            André
+            <br />
+            <span className="text-primary">Fernandes</span>
           </h1>
-          <h1 className='py-2 text-white text-2xl sm:text-4xl'>sou um Desenvolvedor <span className='text-[#1cff81]'> Full-stack</span>.</h1>
-          <p className='py-4 text-gray-300 sm:max-w-[70%] m-auto'>
-            Atualmente focado na criação de Landing Pages e Sites Institucionais, sempre buscando explorar novas técnicas e frameworks para apresentar o melhor resultado.
+
+          <p className="text-lg md:text-2xl text-muted-foreground mb-8 font-light">
+            Full-stack Developer — React · Next.js · Node
           </p>
-          <div className='flex items-center justify-between max-w-[330px] m-auto py-4'>
-            {
-              buttons.map((button) => (
-                <a
-                  href={button.link}
-                  target='_blank'
-                  rel='noreferrer'
-                  className='z-50'
-                >
-                  <div className='rounded-full bg-[#404040] shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300 hover:bg-[#129c50]'>
-                    {button.icon}
-                  </div>
-                </a>
-              ))
-            }
+
+          <p className="max-w-xl text-base text-muted-foreground leading-relaxed mb-12">
+            Criando sites responsivos e aplicações web modernas com foco em
+            performance e experiência do usuário. Aprendizado contínuo,
+            raciocínio lógico e atenção aos detalhes.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              type="button"
+              onClick={() => scrollTo("projects")}
+              className="flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+            >
+              Ver Projetos
+              <ArrowUpRight size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollTo("contact")}
+              className="flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded border border-border hover:border-foreground transition-colors"
+            >
+              Fale comigo
+            </button>
           </div>
         </div>
-      </div>
+
+        <div
+          className="mt-20 flex items-center gap-6 transition-all duration-700 delay-200"
+          style={{
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateY(0)" : "translateY(16px)",
+          }}
+        >
+          {socials.map(({ icon: Icon, href, label }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+              aria-label={label}
+            >
+              <Icon size={18} />
+            </a>
+          ))}
+          <div className="h-px flex-1 bg-border max-w-xs" />
+        </div>
+      </Section>
     </div>
   );
-};
-
-export default Main;
+}
