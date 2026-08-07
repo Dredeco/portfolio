@@ -2,40 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+:root {
+  --background: #080808;
+  --foreground: #f0ede6;
+  --card: #111111;
+  --primary: #c8ff47;
+  --primary-foreground: #080808;
+  --muted: #1c1c1c;
+  --muted-foreground: #888888;
+  --border: rgba(255, 255, 255, 0.07);
+  --input-background: #1a1a1a;
+}
 
 html {
   scroll-behavior: smooth;
-  font-family: 'Raleway', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(200, 255, 71, 0.3);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 255, 71, 0.6);
 }
 
 @layer base {
   body {
-    @apply bg-[#404040] text-[#fff] tracking-wide
+    @apply bg-background text-foreground font-sans antialiased tracking-wide;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold
-  }
-
-  h1 {
-    @apply text-4xl sm:text-5xl md:text-6xl font-[Raleway]
-  }
-
-  h2 {
-    @apply text-3xl sm:text-4xl
-  }
-  
-  li {
-    @apply cursor-pointer
-  }
-
-  input, textarea {
-    @apply text-black
-  }
-
-  button {
-    @apply shadow-xl shadow-gray-900 rounded-xl uppercase bg-gradient-to-r from-[#91f7bf] to-[#0f8042] text-white
+    @apply font-display font-bold;
   }
 }
