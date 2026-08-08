@@ -1,47 +1,141 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React, {useState, useEffect} from 'react';
-import getProjectsAction from '../../services/actions/ProjectActions'
+import { useEffect, useState } from "react";
+import { Github, ArrowUpRight, ExternalLink } from "lucide-react";
+import getProjectsAction from "../../services/actions/ProjectActions";
+import Section from "../../components/Section";
+import SectionLabel from "../../components/SectionLabel";
+import useInView from "../../components/useInView";
 
-const Projects = () => {
-    const [projects, setProjects] = useState([])
+function normalizeTech(tech) {
+  if (!tech) return [];
+  if (Array.isArray(tech)) return tech;
+  if (typeof tech === "string") {
+    return tech.split(",").map((t) => t.trim()).filter(Boolean);
+  }
+  return [];
+}
 
-    useEffect(() => {
-        const getProjects = async () => {
-            const data = await getProjectsAction();
-            setProjects(data)
-          }
-          getProjects();
-    }, [])
+export default function Projects() {
+  const { ref, inView } = useInView();
+  const [projects, setProjects] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await getProjectsAction();
+        if (!cancelled) setProjects(data || []);
+      } catch (err) {
+        if (!cancelled) setError("Não foi possível carregar os projetos.");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
-    <div id='projects' className='w-full'>
-      <div className='max-w-[1240px] mx-auto px-2 py-16'>
-        <p className='text-xl font-bold tracking-widest uppercase text-[#1cff81]'>
-          Projetos
-        </p>
-        <h2 className='py-4'>O que eu já fiz</h2>
-        <div className='grid md:grid-cols-2 gap-8'>
-            {projects.map((project) => (
-                <div key={project.name} className='relative flex items-center min-h-[200px] max-h-[300px] justify-center h-auto w-full shadow-xl shadow-gray-900 rounded-xl group hover:bg-gradient-to-r from-[#5651e5] to-[#709dff]'>
-                    <img 
-                        className='rounded-xl group-hover:opacity-10 w-full h-full object-fill' 
-                        src={`${project.img}`}
-                        alt='/' 
-                    /> 
-                    <div className='hidden w-full p-5 group-hover:block absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>
-                        <h3 className='text-2xl text-white tracking-wider text-center'>{project.name}</h3>
-                        <p className='pb-4 pt-2 text-white text-center'>{project.description}</p>
-                        <Link target="_blank" href={project.link}>
-                            <p className='text-center py-3 mx-10 rounded-lg bg-white text-gray-700 font-bold text-lg cursor-pointer'>Visitar</p>
-                        </Link>
+    <div ref={ref}>
+      <div className="h-px bg-border mx-6 md:mx-12 lg:mx-24" />
+      <Section id="projects" className="py-24 md:py-32">
+        <div
+          className="transition-all duration-700"
+          style={{
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateY(0)" : "translateY(24px)",
+          }}
+        >
+          <SectionLabel>02 — Projetos</SectionLabel>
+
+          {loading && (
+            <p className="text-sm text-muted-foreground">Carregando projetos…</p>
+          )}
+          {error && <p className="text-sm text-muted-foreground">{error}</p>}
+          {!loading && !error && projects.length === 0 && (
+            <p className="text-sm text-muted-foreground">
+              Nenhum projeto para exibir.
+            </p>
+          )}
+
+          <div className="space-y-4">
+            {projects.map((project, i) => {
+              const tech = normalizeTech(project.tech);
+              const title = project.name || project.title || "Projeto";
+              const href = project.link || "#";
+
+              return (
+                <a
+                  key={`${title}-${i}`}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col md:flex-row md:items-start justify-between gap-6 p-6 md:p-8 border border-border rounded bg-card transition-all duration-300 hover:border-primary/30"
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      {project.year ? (
+                        <span className="font-mono text-xs text-muted-foreground">
+                          {project.year}
+                        </span>
+                      ) : null}
+                      {project.year ? (
+                        <span className="w-1 h-1 rounded-full bg-border" />
+                      ) : null}
+                      <span className="font-mono text-xs text-primary">
+                        0{i + 1}
+                      </span>
                     </div>
-                </div>
-            ))}
+                    <h3 className="font-display text-xl md:text-2xl font-bold mb-2 group-hover:text-primary transition-colors tracking-tight">
+                      {title}
+                    </h3>
+                    {project.description ? (
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-4 max-w-lg">
+                        {project.description}
+                      </p>
+                    ) : null}
+                    {tech.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {tech.map((t) => (
+                          <span
+                            key={t}
+                            className="font-mono text-xs px-2 py-0.5 rounded text-primary bg-primary/10"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all group-hover:border-primary group-hover:bg-primary/10">
+                      <ExternalLink
+                        size={14}
+                        className="text-muted-foreground group-hover:text-primary transition-colors"
+                      />
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <a
+              href="https://github.com/dredeco"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Github size={16} />
+              Ver todos no GitHub
+              <ArrowUpRight size={14} />
+            </a>
+          </div>
         </div>
-      </div>
+      </Section>
     </div>
   );
-};
-
-export default Projects
+}
