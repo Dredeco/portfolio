@@ -1,148 +1,148 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
-import emailjs from '@emailjs/browser';
-import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-import { HiOutlineChevronDoubleUp } from 'react-icons/hi';
-import ContactImg from '../../public/images/contact.jpg';
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
+import { Github, Linkedin, Send } from "lucide-react";
+import Section from "../../components/Section";
+import SectionLabel from "../../components/SectionLabel";
+import useInView from "../../components/useInView";
 
-const socialLinks = [
-  { name: 'LinkedIn', link: 'https://www.linkedin.com/in/andrefersouza/', icon: <FaLinkedinIn /> },
-  { name: 'Github', link: 'https://github.com/dredeco', icon: <FaGithub /> },
-  { name: 'Facebook', link: 'https://www.facebook.com/dredeco/', icon: <FaFacebookF /> },
-  { name: 'Instagram', link: 'https://instagram.com/dredeco.dev', icon: <FaInstagram /> },
+const fields = [
+  { name: "user_name", label: "Nome", type: "text", placeholder: "Seu nome" },
+  { name: "user_email", label: "E-mail", type: "email", placeholder: "seu@email.com" },
+  { name: "user_phone", label: "Telefone", type: "tel", placeholder: "+55 (21) 9xxxx-xxxx" },
+  { name: "subject", label: "Assunto", type: "text", placeholder: "Sobre o projeto..." },
 ];
 
-const Contact = () => {
+export default function Contact() {
+  const { ref, inView } = useInView();
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const sendEmail = (e => {
+  async function sendEmail(e) {
     e.preventDefault();
-
-    emailjs.sendForm('gmail', 'template_ptwinsd', e.target, 'RcD_dB2-94xJ045Fq')
-      .then((result) => {
-          console.log(result.text);
-          alert("Mensagem enviada!")
-      }, (error) => {
-          console.log(error.text);
-      });
+    setError(null);
+    setSubmitting(true);
+    try {
+      await emailjs.sendForm('gmail', 'template_ptwinsd', e.target, 'RcD_dB2-94xJ045Fq');
+      setSent(true);
       e.target.reset();
-  });
+    } catch (err) {
+      setError("Não foi possível enviar. Tente novamente em instantes.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
-    <div id='contact' className='w-full lg:h-screen'>
-      <div className='max-w-[1240px] m-auto px-2 py-16 w-full '>
-        <p className='text-xl font-bold tracking-widest uppercase text-[#1cff81]'>
-          Contato
-        </p>
-        <h2 className='py-4'>Entre em contato</h2>
-        <div className='grid lg:grid-cols-5 gap-8'>
-          {/* left */}
-          <div className='col-span-3 lg:col-span-2 w-full h-full shadow-xl shadow-gray-900 rounded-xl p-4'>
-            <div className='lg:p-4 h-full '>
-              <div>
-                <Image
-                  className='rounded-xl hover:scale-105 ease-in duration-300'
-                  src={ContactImg}
-                  alt='/'
-                />
-              </div>
-              <div>
-                <h2 className='py-2'>André Fernandes</h2>
-                <p className='italic text-[#1cff81]'>Full-stack Developer</p>
-                <p className='py-4'>
-                  Disponível para trabalhos. Entre em contato para mais informações.
-                </p>
-              </div>
-              <div>
-                <p className='uppercase pt-8 text-[#1cff81]'>Meus links</p>
-                <div className='flex items-center justify-between py-4'>
-                {
-                  socialLinks.map((button) => (
-                    <a
-                      href={button.link}
-                      target='_blank'
-                      rel='noreferrer'
-                      className='z-50'
-                    >
-                      <div className='rounded-full bg-[#404040] shadow-lg shadow-gray-900 p-6 cursor-pointer hover:scale-110 ease-in duration-300 hover:bg-[#129c50]'>
-                        {button.icon}
-                      </div>
-                    </a>
-                  ))
-                }
-                </div>
+    <div ref={ref}>
+      <div className="h-px bg-border mx-6 md:mx-12 lg:mx-24" />
+      <Section id="contact" className="py-24 md:py-32">
+        <div
+          className="transition-all duration-700"
+          style={{
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateY(0)" : "translateY(24px)",
+          }}
+        >
+          <SectionLabel>04 — Contato</SectionLabel>
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+              <h2 className="font-display text-4xl md:text-5xl font-bold mb-6 leading-none tracking-tight">
+                Vamos trabalhar
+                <br />
+                <span className="text-primary">juntos.</span>
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-10 max-w-sm">
+                Aberto a projetos freelance, colaborações e oportunidades de
+                emprego. Respondo rapidamente.
+              </p>
+              <div className="space-y-4">
+                {[
+                  {
+                    icon: Linkedin,
+                    label: "linkedin.com/in/andrefersouza",
+                    href: "https://www.linkedin.com/in/andrefersouza/",
+                  },
+                  {
+                    icon: Github,
+                    label: "github.com/dredeco",
+                    href: "https://github.com/dredeco",
+                  },
+                ].map(({ icon: Icon, label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+                  >
+                    <div className="w-8 h-8 rounded border border-border flex items-center justify-center group-hover:border-primary/50 transition-colors">
+                      <Icon size={14} />
+                    </div>
+                    {label}
+                  </a>
+                ))}
               </div>
             </div>
-          </div>
 
-          {/* right */}
-          <div className='col-span-3 w-full h-auto shadow-xl shadow-gray-900 rounded-xl lg:p-4'>
-            <div className='p-4'>
-              <form onSubmit={sendEmail}>
-                <div className='grid md:grid-cols-2 gap-4 w-full py-2'>
-                  <div className='flex flex-col'>
-                    <label className='uppercase text-sm py-2'>Nome</label>
-                    <input
-                      className='border-2 rounded-lg p-3 flex border-gray-900'
-                      type='text'
-                      name='user_name'
-                    />
-                  </div>
-                  <div className='flex flex-col'>
-                    <label className='uppercase text-sm py-2'>
-                      Telefone
+            <div>
+              {sent ? (
+                <div className="flex flex-col items-center justify-center gap-4 h-72 border border-primary/30 rounded text-center p-8 bg-primary/5">
+                  <Send size={28} className="text-primary" />
+                  <p className="font-display text-lg font-semibold">
+                    Mensagem enviada!
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Obrigado pelo contato. Responderei em breve.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={sendEmail} className="space-y-4">
+                  {fields.map((field) => (
+                    <div key={field.name}>
+                      <label className="block font-mono text-xs text-muted-foreground mb-1.5 tracking-wide">
+                        {field.label}
+                      </label>
+                      <input
+                        type={field.type}
+                        name={field.name}
+                        placeholder={field.placeholder}
+                        required={field.name !== "user_phone"}
+                        className="w-full px-4 py-3 text-sm border border-border rounded text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors"
+                        style={{ background: "var(--input-background)" }}
+                      />
+                    </div>
+                  ))}
+                  <div>
+                    <label className="block font-mono text-xs text-muted-foreground mb-1.5 tracking-wide">
+                      Mensagem
                     </label>
-                    <input
-                      className='border-2 rounded-lg p-3 flex border-gray-900'
-                      type='text'
-                      name='user_phone'
+                    <textarea
+                      name="message"
+                      rows={4}
+                      required
+                      placeholder="Descreva seu projeto ou oportunidade..."
+                      className="w-full px-4 py-3 text-sm border border-border rounded text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors resize-none"
+                      style={{ background: "var(--input-background)" }}
                     />
                   </div>
-                </div>
-                <div className='flex flex-col py-2'>
-                  <label className='uppercase text-sm py-2'>Email</label>
-                  <input
-                    className='border-2 rounded-lg p-3 flex border-gray-900'
-                    type='email'
-                    name='user_email'
-                  />
-                </div>
-                <div className='flex flex-col py-2'>
-                  <label className='uppercase text-sm py-2'>Assunto</label>
-                  <input
-                    className='border-2 rounded-lg p-3 flex border-gray-900'
-                    type='text'
-                    name='subject'
-                  />
-                </div>
-                <div className='flex flex-col py-2'>
-                  <label className='uppercase text-sm py-2'>Mensagem</label>
-                  <textarea
-                    className='border-2 rounded-lg p-3 border-gray-900'
-                    rows='10'
-                    name='message'
-                  ></textarea>
-                </div>
-                <button className='w-full p-4 text-gray-100 mt-4'>
-                  Enviar
-                </button>
-              </form>
+                  {error && (
+                    <p className="text-sm text-red-400">{error}</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full flex items-center justify-center gap-2 py-3 text-sm font-semibold rounded bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.99] transition-all disabled:opacity-60"
+                  >
+                    <Send size={14} />
+                    {submitting ? "Enviando…" : "Enviar mensagem"}
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>
-        <div className='flex justify-center py-12'>
-          <Link href='#'>
-              <div className='rounded-full shadow-lg shadow-gray-900 p-4 cursor-pointer hover:scale-110 ease-in duration-300'>
-                <HiOutlineChevronDoubleUp
-                  className='text-[#1cff81]'
-                  size={30}
-                />
-              </div>
-          </Link>
-        </div>
-      </div>
+      </Section>
     </div>
   );
-};
-
-export default Contact;
+}
