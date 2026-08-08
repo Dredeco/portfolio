@@ -85,7 +85,7 @@ export default function Projects() {
                         <span className="w-1 h-1 rounded-full bg-border" />
                       ) : null}
                       <span className="font-mono text-xs text-primary">
-                        0{i + 1}
+                        {String(i + 1).padStart(2, "0")}
                       </span>
                     </div>
                     <h3 className="font-display text-xl md:text-2xl font-bold mb-2 group-hover:text-primary transition-colors tracking-tight">
