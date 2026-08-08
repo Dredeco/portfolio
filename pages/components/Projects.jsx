@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import { Github, ArrowUpRight, ExternalLink } from "lucide-react";
-import getProjectsAction from "../../services/actions/ProjectActions";
+import projects from "../../data/projects.json";
 import Section from "../../components/Section";
 import SectionLabel from "../../components/SectionLabel";
 import useInView from "../../components/useInView";
@@ -16,26 +15,6 @@ function normalizeTech(tech) {
 
 export default function Projects() {
   const { ref, inView } = useInView();
-  const [projects, setProjects] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const data = await getProjectsAction();
-        if (!cancelled) setProjects(data || []);
-      } catch (err) {
-        if (!cancelled) setError("Não foi possível carregar os projetos.");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   return (
     <div ref={ref}>
@@ -49,16 +28,6 @@ export default function Projects() {
           }}
         >
           <SectionLabel>02 — Projetos</SectionLabel>
-
-          {loading && (
-            <p className="text-sm text-muted-foreground">Carregando projetos…</p>
-          )}
-          {error && <p className="text-sm text-muted-foreground">{error}</p>}
-          {!loading && !error && projects.length === 0 && (
-            <p className="text-sm text-muted-foreground">
-              Nenhum projeto para exibir.
-            </p>
-          )}
 
           <div className="space-y-4">
             {projects.map((project, i) => {

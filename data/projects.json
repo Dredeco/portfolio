@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Patas Com Destino",
+    "description": "Plataforma de adoção responsável conectando adotantes a protetores e ONGs verificadas, com busca, chat e acompanhamento.",
+    "link": "https://patascomdestino.com.br/",
+    "year": "2026",
+    "tech": ["Next.js", "Adoção", "ONGs"]
+  },
+  {
+    "name": "Dredeco Plays",
+    "description": "Portal de games com notícias, reviews, guias e listas — PS5, Xbox, PC e Nintendo, com foco no público gamer brasileiro.",
+    "link": "https://dredecoplays.com.br/",
+    "year": "2026",
+    "tech": ["Next.js", "Conteúdo", "Games"]
+  },
+  {
+    "name": "Sangue de Espinho",
+    "description": "Experiência de leitura para crônica de fantasia sombria — capítulos, compêndio de lore e imersão narrativa.",
+    "link": "https://weblivro.vercel.app/",
+    "year": "2026",
+    "tech": ["Next.js", "Vercel"]
+  },
+  {
+    "name": "RUNTIME",
+    "description": "Game/experiência web no tema Debug or Die Trying — instale o universo e sobreviva ao runtime.",
+    "link": "https://runtime-eight.vercel.app/",
+    "year": "2026",
+    "tech": ["Next.js", "Vercel"]
+  },
+  {
+    "name": "Econoflix",
+    "description": "Produto web em alpha — experiência de conteúdo econômico.",
+    "link": "https://econoflix-alpha.vercel.app/",
+    "year": "2026",
+    "tech": ["Next.js", "Vercel"]
+  }
+]
